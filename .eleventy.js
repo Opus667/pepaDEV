@@ -10,9 +10,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.setLibrary("md", md);
 
   // Filtro markdown → permite usar {{ content | markdown | safe }}
-  eleventyConfig.addFilter("markdown", (content) => {
-    return md.render(content || markdown || "");
-  });
+  // eleventyConfig.addFilter("markdown", (content) => {
+  //   return md.render(content || markdown || "");
+  // });
 
   // Disable automatic use of your .gitignore
   eleventyConfig.setUseGitIgnore(false);
