@@ -7,16 +7,6 @@ const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const htmlmin = require("html-minifier");
 
 module.exports = function (eleventyConfig) {
-  let options = {
-    html: true, // Enable HTML tags in Markdown
-    breaks: true, // Convert '\n' in source into <br>
-    linkify: true, // Autoconvert URL-like text to links
-  };
-
-  let markdownLib = markdownIt(options).use(markdownItEmoji); // Use the emoji plugin
-
-  eleventyConfig.setLibrary("md", markdownLib);
-
   // Disable automatic use of your .gitignore
   eleventyConfig.setUseGitIgnore(false);
 
@@ -74,4 +64,13 @@ module.exports = function (eleventyConfig) {
     },
     htmlTemplateEngine: "njk",
   };
+  let options = {
+    html: true, // Enable HTML tags in Markdown
+    breaks: true, // Convert '\n' in source into <br>
+    linkify: true, // Autoconvert URL-like text to links
+  };
+
+  let markdownLib = markdownIt(options).use(markdownItEmoji); // Use the emoji plugin
+
+  eleventyConfig.setLibrary("md", markdownLib);
 };
