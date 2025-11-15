@@ -1,19 +1,26 @@
-const markdownIt = require("markdown-it");
-const markdownItEmoji = require("markdown-it-emoji"); // Example plugin
-
 const yaml = require("js-yaml");
 const { DateTime } = require("luxon");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const htmlmin = require("html-minifier");
+const createMarkdown = require("./utils/markdown.js");
 
 module.exports = function (eleventyConfig) {
+  // Custom Markdown library
+  const md = createMarkdown();
+  eleventyConfig.setLibrary("md", md);
+
+  // Filtro markdown → permite usar {{ content | markdown | safe }}
+  eleventyConfig.addFilter("markdown", (content) => {
+    return md.render(content || markdown || "");
+  });
+
   // Disable automatic use of your .gitignore
   eleventyConfig.setUseGitIgnore(false);
 
   // Merge data instead of overriding
   eleventyConfig.setDataDeepMerge(true);
 
-  // human readable date
+  // Human readable date
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat(
       "dd LLL yyyy"
@@ -23,11 +30,10 @@ module.exports = function (eleventyConfig) {
   // Syntax Highlighting for Code blocks
   eleventyConfig.addPlugin(syntaxHighlight);
 
-  // To Support .yaml Extension in _data
-  // You may remove this if you can use JSON
+  // Support .yaml in _data
   eleventyConfig.addDataExtension("yaml", (contents) => yaml.load(contents));
 
-  // Copy Static Files to /_Site
+  // Copy static files
   eleventyConfig.addPassthroughCopy({
     "./src/admin/config.yml": "./admin/config.yml",
     "./node_modules/alpinejs/dist/cdn.min.js": "./static/js/alpine.js",
@@ -35,42 +41,28 @@ module.exports = function (eleventyConfig) {
       "./static/css/prism-tomorrow.css",
   });
 
-  // Copy Image Folder to /_site
+  // Copy images
   eleventyConfig.addPassthroughCopy("./src/static/img");
 
-  // Copy favicon to route of /_site
+  // Copy favicon
   eleventyConfig.addPassthroughCopy("./src/favicon.ico");
 
   // Minify HTML
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
-    // Eleventy 1.0+: use this.inputPath and this.outputPath instead
     if (outputPath.endsWith(".html")) {
-      let minified = htmlmin.minify(content, {
+      return htmlmin.minify(content, {
         useShortDoctype: true,
         removeComments: true,
         collapseWhitespace: true,
       });
-      return minified;
     }
-
     return content;
   });
 
-  // Let Eleventy transform HTML files as nunjucks
-  // So that we can use .html instead of .njk
   return {
     dir: {
       input: "src",
     },
     htmlTemplateEngine: "njk",
   };
-  let options = {
-    html: true, // Enable HTML tags in Markdown
-    breaks: true, // Convert '\n' in source into <br>
-    linkify: true, // Autoconvert URL-like text to links
-  };
-
-  let markdownLib = markdownIt(options).use(markdownItEmoji); // Use the emoji plugin
-
-  eleventyConfig.setLibrary("md", markdownLib);
 };
