@@ -18,3 +18,12 @@ body :not(pre) > code[class*="language-"],
 body pre[class*="language-"] {
   @apply bg-gray-800;
 }
+
+code.hljs {
+  background: #282c34;
+  color: #c678dd;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: var(--font-mono, monospace);
+}
