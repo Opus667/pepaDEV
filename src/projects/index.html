@@ -3,27 +3,28 @@ layout: projects
 ---
 
 <section class="mt-15">
-  {% set postslist = collections.post %} {% for post in postslist | reverse %}
+  {% set projectslist = collections.project %} {% for project in projectslist |
+  reverse %}
   <article class="my-8">
     <h2 class="font-bold text-3xl text-gray-900 mb-2">
-      <a href="{{ projects.url | url }}">
-        {% if projects.data.title %} {{ projects.data.title }} {% else %}
-        Untitled {% endif %}
+      <a href="{{ project.url | url }}">
+        {% if project.data.title %} {{ project.data.title }} {% else %} Untitled
+        {% endif %}
       </a>
     </h2>
     <p class="text-base leading-6 text-gray-500 mb-3">
       <time>
-        {{ projects.date | readableDate }} by
-        <a>{{ projects.data.author }}</a>
+        {{ project.date | readableDate }} by
+        <a>{{ project.data.author }}</a>
       </time>
     </p>
-    {% if projects.data.description %}
-    <p class="text-lg text-gray-500 mb-3">{{ projects.data.description }}</p>
+    {% if project.data.description %}
+    <p class="text-lg text-gray-500 mb-3">{{ project.data.description }}</p>
     {% endif %}
 
     <p>
       <a
-        href="{{ projects.url | url }}"
+        href="{{ project.url | url }}"
         class="text-indigo-500 font-bold text-lg"
       >
         Read more →

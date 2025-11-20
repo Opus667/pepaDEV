@@ -13,8 +13,8 @@ local_backend: true
 # publish_mode: editorial_workflow
 collections:
   - label: "Projects"
-    name: "projects"
-    folder: "src/projects"
+    name: "project"
+    folder: "src/project"
     create: true
     editor:
       preview: false
