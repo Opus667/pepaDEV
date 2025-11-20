@@ -951,9 +951,6 @@ video {
 .prose :where(.prose > :last-child):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
   margin-bottom: 0;
 }
-.static {
-  position: static;
-}
 .fixed {
   position: fixed;
 }
@@ -996,14 +993,8 @@ video {
 .inline-block {
   display: inline-block;
 }
-.inline {
-  display: inline;
-}
 .flex {
   display: flex;
-}
-.table {
-  display: table;
 }
 .grid {
   display: grid;
@@ -1033,9 +1024,6 @@ video {
   flex: 1 1 0%;
 }
 .flex-grow {
-  flex-grow: 1;
-}
-.grow {
   flex-grow: 1;
 }
 .grid-cols-1 {
@@ -1157,9 +1145,6 @@ video {
 }
 .font-medium {
   font-weight: 500;
-}
-.italic {
-  font-style: italic;
 }
 .leading-6 {
   line-height: 1.5rem;
